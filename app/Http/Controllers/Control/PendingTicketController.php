@@ -40,12 +40,24 @@ class PendingTicketController extends Controller
             
             $ticket->state="approved";
             $ticket->save();
+            $notification = array(
+                'message' => 'Ticket approved.', 
+                'alert-type' => 'success'
+            );
+            return redirect()->back()->with($notification);
 
         }else if($action=="reject"){
             $ticket->state="reject";
             $ticket->save();
+            $notification = array(
+                'message' => 'Ticket rejected.', 
+                'alert-type' => 'warning'
+            );
+        
+            return redirect()->back()->with($notification);
 
         }
+       
     
         return redirect()->back();
     }
@@ -71,7 +83,14 @@ class PendingTicketController extends Controller
         if ($user->id ==$ticket->user_id) {
             $ticket->state="approved";
             $ticket->save();
+            $notification = array(
+                'message' => 'Ticket approved successfully.', 
+                'alert-type' => 'success'
+            );
+        
+            return redirect()->back()->with($notification);
         }
+       
         return redirect()->back();
     }
 
@@ -106,17 +125,33 @@ class PendingTicketController extends Controller
             
             $ticket->state="approved";
             $ticket->save();
+            $notification = array(
+                'message' => 'Ticket approved successfully.', 
+                'alert-type' => 'success'
+            );
+        
 
         }else if($action=="reject"){
             $ticket->state="reject";
             $ticket->save();
+            $notification = array(
+                'message' => 'Ticket rejected successfully.', 
+                'alert-type' => 'warning'
+            );
+        
 
         }else if($action=="opened"){
             $ticket->state="opened";
             $ticket->save();
+            $notification = array(
+                'message' => 'Ticket opened successfully.', 
+                'alert-type' => 'info'
+            );
+        
 
         }
-        return redirect()->back();
+       
+        return redirect()->back()->with($notification);
         
         
     }

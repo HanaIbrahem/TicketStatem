@@ -45,7 +45,7 @@
                 <div class="table-responsive">
 
                     <table id="example" class="table">
-                        <thead>
+                        <thead style="font-size: 12px">
                             <tr>
                                 <th>
                                     No
@@ -74,7 +74,7 @@
                                     Solution
                                 </th>
 
-                                <th>
+                                <th >
                                     Note
                                 </th>
                                 <th>
@@ -83,9 +83,9 @@
                                 <th>
                                     CloseDate
                                 </th>
-                                <th>
+                                {{-- <th>
                                     CreatedAt
-                                </th>
+                                </th> --}}
                                 <th>
                                     Status
                                 </th>
@@ -94,7 +94,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="font-size: 12px">
 
 
                             @foreach ($tickets as $ticket)
@@ -143,10 +143,10 @@
 
                                     </td>
 
-                                    <td>
+                                    {{-- <td>
                                         {{ $ticket->created_at->format('Y-m-d h:i A') }}
 
-                                    </td>
+                                    </td> --}}
 
                                     <td>
                                         <x-ticket :state="$ticket->state" />
@@ -265,6 +265,10 @@
     <script src="{{ asset('dashbord/assets/datatable/js/pdfmake.min.js') }}"></script>
     <script src="{{ asset('dashbord/assets/datatable/js/vfs_fonts.js') }}"></script>
     <script src="{{ asset('dashbord/assets/datatable/js/custom.js') }}"></script>
+
+    <script>
+        
+    </script>
 @endsection
 
 @section('switalertjs')

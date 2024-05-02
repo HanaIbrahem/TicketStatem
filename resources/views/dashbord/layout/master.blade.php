@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ asset('dashbord/assets/fontawsom/css/all.min.css') }}">
     @yield('datatablecss')
     @yield('selectboxcss')
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
+
     <link rel="icon" href="{{ asset('unnamed.png') }}">
 
     <title>Teammart-IT</title>
@@ -45,6 +47,10 @@
     <script src="{{ asset('dashbord/assets/libs/simplebar/dist/simplebar.js') }}"></script> --}}
     <script src="{{ asset('dashbord/assets/js/dashboard.js') }}"></script>
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
+    <x-toster />
     @yield('datatablejs')
     @yield('selectboxjs')
     @yield('switalertjs')

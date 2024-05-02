@@ -76,8 +76,12 @@ class TIckteController extends Controller
         $ticket->enddate = $request->input('enddate');
 
         $ticket->save();
+        $notification = array(
+            'message' => 'Ticket created successfully.', 
+            'alert-type' => 'success'
+        );
 
-        return redirect()->route('dashbord.ticket')->with('success_message', 'Ticket created successfully.');
+        return redirect()->route('dashbord.ticket')->with($notification);
     }
 
 
@@ -124,7 +128,17 @@ class TIckteController extends Controller
     public function update(Request $request)
     {
         //
-        
+        $request->validate([
+            'requetsfrom' => 'required|exists:requets_froms,id',
+            'place' => 'required',
+            'issuetype' => 'required|in:Hardwar,Softwar,Network,Security,Email',
+            'problemtype' => 'required|exists:problem_types,id',
+            'solution' => 'required|exists:solutions,id',
+            'delivery' => 'required|in:Email,Phone Call,Remote,On Site Support,Video Call',
+            'opendate' => 'required|date',
+            'enddate' => 'required|date'
+        ]);
+
         $id = $request->input('id');
         $ticket = Tickt::findOrFail($id);
        //enum fields
@@ -136,16 +150,20 @@ class TIckteController extends Controller
        $ticket->note = $request->input('note');
        //fogign keys
        $ticket->user_id = auth()->id();
-       $ticket->requets_id = $request->input('requestfrom');
-       $ticket->problem_id = $request->input('problemtype');
-       $ticket->solution_id = $request->input('solution');
+       $ticket->requets_id = $request->input('requetsfrom');
+        $ticket->problem_id = $request->input('problemtype');
+        $ticket->solution_id = $request->input('solution');
        //date 
        $ticket->startdate = $request->input('opendate');
        $ticket->enddate = $request->input('enddate');
 
 
         $ticket->save();
-        return redirect()->route('dashbord.ticket')->with('success_message', 'Ticket edited successfully.');
+        $notification = array(
+            'message' => 'Ticket edited successfully.', 
+            'alert-type' => 'success'
+        );
+        return redirect()->route('dashbord.ticket')->with($notification);
     }
 
     // to change state from opend to pending
@@ -174,8 +192,13 @@ class TIckteController extends Controller
         $ticket->state = "pending";
         $ticket->save();
 
-        return redirect()->back();
+        $notification = array(
+            'message' => 'Ticket state changed.', 
+            'alert-type' => 'warning'
+        );
+        return redirect()->back()->with($notification);
     }
+   
 
     return response()->json(['success' => false, 'message' => 'Unauthorized or invalid state']);
 }
@@ -198,6 +221,7 @@ class TIckteController extends Controller
             $ticket->delete();
 
         }
+        
         return redirect()->back();
     
     }
