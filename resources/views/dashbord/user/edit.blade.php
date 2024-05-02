@@ -40,8 +40,8 @@
            
                 
                 <select class="form-select mr-sm-2" name="userrole" id="inlineFormCustomSelect">
-                    <option name="role" class="mb-2" {{  $user->role === 'employee' ? 'selected' : ''}} value="employee">Employee</option>
-                    <option name="role" {{  $user->role === 'manager' ? 'selected' : ''}} value="manager">Manger</option>
+                    <option  class="mb-2" {{  $user->role === 'employee' ? 'selected' : ''}} value="employee">Employee</option>
+                    <option  {{  $user->role === 'manager' ? 'selected' : ''}} value="manager">Manger</option>
                 </select>
 
             </div>

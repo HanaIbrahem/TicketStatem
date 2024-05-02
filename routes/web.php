@@ -26,7 +26,7 @@ Route::post('logout', [UserController::class, 'destroy'])
 ->name('logout')->middleware('auth');
 
 //Superadmin Midleware 
-Route::middleware(['auth','superadmin'])->prefix('dashbord')->name('dashbord.')->group(function (){
+Route::middleware(['auth','superadmin'])->name('dashbord.')->group(function (){
 
 
     //Authentication controller Super Admin
@@ -68,7 +68,7 @@ Route::middleware(['auth','superadmin'])->prefix('dashbord')->name('dashbord.')-
 });
 
 //manager middlewere 
-Route::middleware(['auth','manager'])->prefix('dashbord')->name('dashbord.')->group(function (){
+Route::middleware(['auth','manager'])->name('dashbord.')->group(function (){
 
     //changestate
     Route::get('index',[DashbordController::class,'index'])->name('index');
@@ -86,7 +86,7 @@ Route::middleware(['auth','manager'])->prefix('dashbord')->name('dashbord.')->gr
 
 //employee 
 
-Route::middleware(['auth','verified'])->prefix('dashbord')->name('dashbord.')->group(function (){
+Route::middleware(['auth','verified'])->name('dashbord.')->group(function (){
 
     Route::get('index',[DashbordController::class,'index'])->name('index');
 

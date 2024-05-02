@@ -44,7 +44,7 @@
                 <input type="password" required name="password_confirmation" required="" autocomplete="new-password" class="form-control" id="confirm" placeholder="Confirm">
             </div>
 
-            <div class="col-sm-6 mb-2"> 
+            {{-- <div class="col-sm-6 mb-2"> 
                 <label class="form-label" for="name">UserType</label>
            
                 
@@ -53,7 +53,7 @@
                     <option name="role" value="manager">Manger</option>
                 </select>
 
-            </div>
+            </div> --}}
             <div class="col-12 mt-3 text-end">
                 <button type="submit" class="btn btn-primary waves-effect waves-float waves-light">
                     Save

@@ -46,7 +46,7 @@ class TIckteController extends Controller
         //
 
         $request->validate([
-            'requestfrom' => 'required|exists:requets_froms,id',
+            'requetsfrom' => 'required|exists:requets_froms,id',
             'place' => 'required',
             'issuetype' => 'required|in:Hardwar,Softwar,Network,Security,Email',
             'problemtype' => 'required|exists:problem_types,id',
@@ -66,7 +66,7 @@ class TIckteController extends Controller
         $ticket->note = $request->input('note');
         //fogign keys
         $ticket->user_id = auth()->id();
-        $ticket->requets_id = $request->input('requestfrom');
+        $ticket->requets_id = $request->input('requetsfrom');
         $ticket->problem_id = $request->input('problemtype');
         $ticket->solution_id = $request->input('solution');
         //My default
