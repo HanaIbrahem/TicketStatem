@@ -101,6 +101,8 @@ Route::middleware(['auth','verified'])->name('dashbord.')->group(function (){
     //grid view
     Route::get('ticket/view',[\App\Http\Controllers\Control\TIckteController::class,'grid'])->name('ticket.grid');
 
+    Route::get('ticket/show/{id}',[\App\Http\Controllers\Control\TIckteController::class,'show'])->name('ticket.show');
+
 });
 
 Route::any('{any}', function () {

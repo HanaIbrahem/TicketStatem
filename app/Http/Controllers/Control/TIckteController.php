@@ -81,7 +81,7 @@ class TIckteController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('dashbord.ticket')->with($notification);
+        return redirect()->back()->with($notification);
     }
 
 
@@ -163,7 +163,7 @@ class TIckteController extends Controller
             'message' => 'Ticket edited successfully.',
             'alert-type' => 'success'
         );
-        return redirect()->route('dashbord.ticket')->with($notification);
+        return redirect()->back()->with($notification);
     }
 
     // to change state from opend to pending
@@ -222,11 +222,28 @@ class TIckteController extends Controller
 
         }
 
-        return redirect()->back();
+        return redirect()->route('dashbord.index');
 
     }
 
-    // manger tickets 
+    // show tickets
+    public function show(string $id)
+    {
+
+        $user = Auth::user();
+        $ticket=Tickt::findOrFail($id);
+
+        if ($user->id == $ticket->user_id) {
+
+            return view('dashbord.tickt.show',compact('ticket'));
+
+
+        }
+        
+
+        return redirect()->back();
+        
+    }
 
 
 }

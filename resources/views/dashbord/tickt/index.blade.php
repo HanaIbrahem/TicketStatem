@@ -103,7 +103,7 @@
                                         {{ $no++ }}
                                     </td>
                                     <td>
-                                        {{ $ticket->id }}
+                                        <a href="{{route('dashbord.ticket.show',$ticket->id )}}">{{ $ticket->id }}</a>
                                     </td>
                                     <td>
                                         {{ $ticket->requestFrom->title }}

@@ -48,7 +48,7 @@
                            <span class="d-flex">
                                <i class="fa-solid fa-headset"></i>
                            </span>
-                           <span class="hide-menu">Ticket</span>
+                           <span class="hide-menu">Support</span>
                        </a>
                        <ul aria-expanded="false" class="collapse first-level in">
                            <li class="sidebar-item">
@@ -77,12 +77,10 @@
 
 
                                <div class="round-16 d-flex align-items-center justify-content-center">
-                                   <i class="ti ti-clock"></i></div>
-
-                               <span class="hide-menu">Pending Tecket
+                                   <i class="ti ti-clock"></i></div><span class="hide-menu">Pending Teckets
 
                                    @if ($ticketcount > 0)
-                                       (<span class="text-warning">{{ $ticketcount }}</span>)
+                                       ({{ $ticketcount }} )
                                    @endif
                                </span>
                            </a>

@@ -19,28 +19,50 @@ class DashbordController extends Controller
     public function index()
     {
 
-        $user= Auth::user();
-        $problemTypeCount = ProblemType::count();
-        $requestFromCount = RequetsFrom::count();
-        $userCount = User::count();
-        $ticketCount=Tickt::count();
+        $user = Auth::user();
+
+
+        $openTicketsCount = Tickt::where('user_id', $user->id)
+            ->where('state', 'opened')
+            ->count();
+
+        // Count pending tickets
+        $pendingTicketsCount = Tickt::where('user_id', $user->id)
+            ->where('state', 'pending')
+            ->count();
+
+        // Count all tickets
+        $totalTicketsCount = Tickt::where('user_id', $user->id)->count();
+
+        // Get recent tickets limited to 8
+        $recentTickets = Tickt::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->take(8)
+            ->get();
 
         if ($user->isManager()) {
 
-            return view('dashbord.manager.index',compact('problemTypeCount', 'requestFromCount', 'userCount', 'ticketCount'));
 
-        } else if ($user->isSuperadmin()){
-            return view('dashbord.index',compact('problemTypeCount', 'requestFromCount', 'userCount', 'ticketCount'));
+            return view('dashbord.manager.index', compact('recentTickets','totalTicketsCount','openTicketsCount'));
 
-        }else{
+        } else if ($user->isSuperadmin()) {
+            $problemTypeCount = ProblemType::count();
+            $requestFromCount = RequetsFrom::count();
+            $userCount = User::count();
+            $ticketCount = Tickt::count();
+            return view('dashbord.index', compact('problemTypeCount', 'requestFromCount', 'userCount', 'ticketCount'));
 
-            return view('dashbord.employee.index');
+        } else {
+
+
+
+            return view('dashbord.employee.index',compact('recentTickets','totalTicketsCount','openTicketsCount','pendingTicketsCount'));
         }
-    
-        
- 
+
+
+
 
     }
 
-    
+
 }
