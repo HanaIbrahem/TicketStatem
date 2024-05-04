@@ -12,7 +12,6 @@ class SolutionController extends Controller
      */
     public function index()
     {
-        //
         $solutions=Solution::all();
         return view('dashbord.solution.index',compact('solutions'));
     }

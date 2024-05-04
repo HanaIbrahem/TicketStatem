@@ -98,6 +98,9 @@ Route::middleware(['auth','verified'])->name('dashbord.')->group(function (){
     Route::get('ticket/state/{id}',[\App\Http\Controllers\Control\TIckteController::class,'change_state'])->name('ticket.state');
     Route::get('ticket/destroy/{id}',[\App\Http\Controllers\Control\TIckteController::class,'destroy'])->name('ticket.destroy');
 
+    //grid view
+    Route::get('ticket/view',[\App\Http\Controllers\Control\TIckteController::class,'grid'])->name('ticket.grid');
+
 });
 
 Route::any('{any}', function () {

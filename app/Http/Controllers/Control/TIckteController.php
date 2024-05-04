@@ -62,7 +62,7 @@ class TIckteController extends Controller
         $ticket->deliverytype = $request->input('delivery');
         $ticket->issuetype = $request->input('issuetype');
 
-        
+
         $ticket->note = $request->input('note');
         //fogign keys
         $ticket->user_id = auth()->id();
@@ -77,7 +77,7 @@ class TIckteController extends Controller
 
         $ticket->save();
         $notification = array(
-            'message' => 'Ticket created successfully.', 
+            'message' => 'Ticket created successfully.',
             'alert-type' => 'success'
         );
 
@@ -106,15 +106,15 @@ class TIckteController extends Controller
             $problemTypes = ProblemType::where('is_active', true)->orderBy('title', 'asc')->get();
             $requetsFroms = RequetsFrom::where('is_active', true)->orderBy('title', 'asc')->get();
             $solutions = Solution::where('is_active', true)->orderBy('title', 'asc')->get();
-            return view('dashbord.tickt.edit', compact('ticket','problemTypes','requetsFroms','solutions'));
+            return view('dashbord.tickt.edit', compact('ticket', 'problemTypes', 'requetsFroms', 'solutions'));
 
         }
-        if ($user->id == $ticket->user_id && $user->role!=='employee') {
+        if ($user->id == $ticket->user_id && $user->role !== 'employee') {
 
             $problemTypes = ProblemType::where('is_active', true)->orderBy('title', 'asc')->get();
             $requetsFroms = RequetsFrom::where('is_active', true)->orderBy('title', 'asc')->get();
             $solutions = Solution::where('is_active', true)->orderBy('title', 'asc')->get();
-            return view('dashbord.tickt.edit', compact('ticket','problemTypes','requetsFroms','solutions'));
+            return view('dashbord.tickt.edit', compact('ticket', 'problemTypes', 'requetsFroms', 'solutions'));
 
         }
 
@@ -141,26 +141,26 @@ class TIckteController extends Controller
 
         $id = $request->input('id');
         $ticket = Tickt::findOrFail($id);
-       //enum fields
-       $ticket->place = $request->input('place');
-       $ticket->deliverytype = $request->input('delivery');
-       $ticket->issuetype = $request->input('issuetype');
+        //enum fields
+        $ticket->place = $request->input('place');
+        $ticket->deliverytype = $request->input('delivery');
+        $ticket->issuetype = $request->input('issuetype');
 
-       
-       $ticket->note = $request->input('note');
-       //fogign keys
-       $ticket->user_id = auth()->id();
-       $ticket->requets_id = $request->input('requetsfrom');
+
+        $ticket->note = $request->input('note');
+        //fogign keys
+        $ticket->user_id = auth()->id();
+        $ticket->requets_id = $request->input('requetsfrom');
         $ticket->problem_id = $request->input('problemtype');
         $ticket->solution_id = $request->input('solution');
-       //date 
-       $ticket->startdate = $request->input('opendate');
-       $ticket->enddate = $request->input('enddate');
+        //date 
+        $ticket->startdate = $request->input('opendate');
+        $ticket->enddate = $request->input('enddate');
 
 
         $ticket->save();
         $notification = array(
-            'message' => 'Ticket edited successfully.', 
+            'message' => 'Ticket edited successfully.',
             'alert-type' => 'success'
         );
         return redirect()->route('dashbord.ticket')->with($notification);
@@ -180,28 +180,28 @@ class TIckteController extends Controller
     //     }
 
     //     return redirect()->back();
-    
+
     // }
 
     public function change_state($id)
-{
-    $ticket = Tickt::findOrFail($id);
-    $user = Auth::user();
+    {
+        $ticket = Tickt::findOrFail($id);
+        $user = Auth::user();
 
-    if ($user->id == $ticket->user_id && $ticket->state == "opened") {
-        $ticket->state = "pending";
-        $ticket->save();
+        if ($user->id == $ticket->user_id && $ticket->state == "opened") {
+            $ticket->state = "pending";
+            $ticket->save();
 
-        $notification = array(
-            'message' => 'Ticket state changed.', 
-            'alert-type' => 'warning'
-        );
-        return redirect()->back()->with($notification);
+            $notification = array(
+                'message' => 'Ticket state changed.',
+                'alert-type' => 'warning'
+            );
+            return redirect()->back()->with($notification);
+        }
+
+
+        return response()->json(['success' => false, 'message' => 'Unauthorized or invalid state']);
     }
-   
-
-    return response()->json(['success' => false, 'message' => 'Unauthorized or invalid state']);
-}
 
 
     /**
@@ -210,23 +210,23 @@ class TIckteController extends Controller
     public function destroy(string $id)
     {
         //
-        $ticket=Tickt::findOrFail($id);
+        $ticket = Tickt::findOrFail($id);
         $user = Auth::user();
 
-        if ($user->id == $ticket->user_id && ($ticket->state=="opened" || $ticket->state=="reject" ) ) {
+        if ($user->id == $ticket->user_id && ($ticket->state == "opened" || $ticket->state == "reject")) {
             $ticket->delete();
 
         }
-        if ($user->id == $ticket->user_id && $user->role!=='employee' ) {
+        if ($user->id == $ticket->user_id && $user->role !== 'employee') {
             $ticket->delete();
 
         }
-        
+
         return redirect()->back();
-    
+
     }
 
     // manger tickets 
 
-    
+
 }
