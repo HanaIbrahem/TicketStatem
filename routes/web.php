@@ -73,7 +73,8 @@ Route::middleware(['auth','manager'])->name('dashbord.')->group(function (){
     //changestate
     Route::get('index',[DashbordController::class,'index'])->name('index');
     Route::get('pending/tickets',[\App\Http\Controllers\Control\PendingTicketController::class,'index'])->name('pending');
-    Route::get('pending/{id}',[\App\Http\Controllers\Control\PendingTicketController::class,'changestate'])->name('pending.state');
+    Route::get('pending/',[\App\Http\Controllers\Control\PendingTicketController::class,'changestate'])->name('pending.state');
+    Route::get('pending/all/{action}',[\App\Http\Controllers\Control\PendingTicketController::class,'changeallstate'])->name('pending.allstate');
 
     Route::get('ticket/approve/{id}',[\App\Http\Controllers\Control\PendingTicketController::class,'approve'])->name('pending.approve');
     Route::get('tickets/',[\App\Http\Controllers\Control\PendingTicketController::class,'tickets'])->name('ticket.all');
@@ -99,10 +100,16 @@ Route::middleware(['auth','verified'])->name('dashbord.')->group(function (){
     Route::get('ticket/destroy/{id}',[\App\Http\Controllers\Control\TIckteController::class,'destroy'])->name('ticket.destroy');
 
     //grid view
-    Route::get('ticket/view',[\App\Http\Controllers\Control\TIckteController::class,'grid'])->name('ticket.grid');
+    Route::get('ticket/grid',[\App\Http\Controllers\Control\TIckteController::class,'grid'])->name('ticket.grid');
 
     Route::get('ticket/show/{id}',[\App\Http\Controllers\Control\TIckteController::class,'show'])->name('ticket.show');
+    Route::get('ticket/delete/{id}',[\App\Http\Controllers\Control\TIckteController::class,'delete'])->name('ticket.delete');
+    Route::get('ticket/moreticket',[\App\Http\Controllers\Control\TIckteController::class,'getMoretickets'])->name('ticket.more');
+    Route::post('ticket/date',[\App\Http\Controllers\Control\TIckteController::class,'dateorder'])->name('ticket.dateorder');
 
+    Route::post('ticket/solution',[\App\Http\Controllers\Control\SolutionController::class,'addsolution'])->name('addsolution');
+    Route::post('ticket/problem',[\App\Http\Controllers\Control\ProlemTypeController::class,'addproblem'])->name('addproblem');
+    
 });
 
 Route::any('{any}', function () {

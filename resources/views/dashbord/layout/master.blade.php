@@ -45,7 +45,7 @@
     <script src="{{ asset('dashbord/assets/js/app.min.js') }}"></script>
     {{-- <script src="{{ asset('dashbord/assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('dashbord/assets/libs/simplebar/dist/simplebar.js') }}"></script> --}}
-    <script src="{{ asset('dashbord/assets/js/dashboard.js') }}"></script>
+    {{-- <script src="{{ asset('dashbord/assets/js/dashboard.js') }}"></script> --}}
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
@@ -54,7 +54,7 @@
     @yield('datatablejs')
     @yield('selectboxjs')
     @yield('switalertjs')
-
+    @stack('scripts')
 
 </body>
 

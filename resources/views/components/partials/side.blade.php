@@ -51,14 +51,7 @@
                            <span class="hide-menu">Support</span>
                        </a>
                        <ul aria-expanded="false" class="collapse first-level in">
-                           <li class="sidebar-item">
-                               <a href="{{ route('dashbord.ticket') }}" class="sidebar-link">
-                                   <div class="round-16 d-flex align-items-center justify-content-center">
-                                       <i class="ti ti-circle"></i>
-                                   </div>
-                                   <span class="hide-menu">Ticket List</span>
-                               </a>
-                           </li>
+                          
                            <li class="sidebar-item">
                                <a href="{{ route('dashbord.ticket.create') }}" class="sidebar-link">
                                    <div class="round-16 d-flex align-items-center justify-content-center">
@@ -67,6 +60,23 @@
                                    <span class="hide-menu">Open Ticket</span>
                                </a>
                            </li>
+
+                           <li class="sidebar-item">
+                            <a href="{{ route('dashbord.ticket.grid') }}" class="sidebar-link">
+                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-circle"></i>
+                                </div>
+                                <span class="hide-menu">Ticket Grid</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('dashbord.ticket') }}" class="sidebar-link">
+                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-circle"></i>
+                                </div>
+                                <span class="hide-menu">Ticket List</span>
+                            </a>
+                        </li>
                        </ul>
                    </li>
 

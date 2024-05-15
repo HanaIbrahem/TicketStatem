@@ -222,10 +222,75 @@ class TIckteController extends Controller
 
         }
 
+        return redirect()->back();
+
+    }
+
+    // add grid view for ticket page '
+
+    public function grid()
+    {
+        $user=Auth::user();
+        $tickets = Tickt::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('dashbord.tickt.grid',compact('tickets'));
+    }
+
+    public function delete(string $id)
+    {
+        //
+        $ticket = Tickt::findOrFail($id);
+        $user = Auth::user();
+
+        if ($user->id == $ticket->user_id && ($ticket->state == "opened" || $ticket->state == "reject")) {
+            $ticket->delete();
+
+        }
+        if ($user->id == $ticket->user_id && $user->role !== 'employee') {
+            $ticket->delete();
+
+        }
+
         return redirect()->route('dashbord.index');
 
     }
 
+    //filter order by date 
+    public function dateorder(Request $request)
+    {
+
+
+
+        $user = Auth::user();
+        $request->validate([
+            'fromdate' => 'required|date',
+            'todate' => 'required|date'
+        ]);
+        $formdate=$request->input('fromdate');
+        $todate=$request->input('todate');
+
+        $tickets = Tickt::where('user_id', $user->id)
+        ->whereBetween('created_at',[$formdate,$todate])
+        ->orderBy('created_at', 'desc');
+    
+    
+        return response()->json($tickets);
+
+    }
+    //get more tickets
+    public function getMoretickets( Request $request)
+    {
+        $user = Auth::user();
+        // dd($request);
+        $tickets = Tickt::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
+    
+        if ($request->ajax()) {
+            return view('dashbord.tickt.mortecket', compact('tickets'))->render();
+        }
+    
+        return abort(404);
+    }
+    
     // show tickets
     public function show(string $id)
     {

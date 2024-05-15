@@ -19,9 +19,16 @@ class SolutionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function addsolution(Request $request)
     {
         //
+        $request->validate([
+            'title' => 'required|unique:solutions,title',
+        ]);
+        $solution= new Solution();
+        $solution->title= $request->title;
+        $solution->save();
+        return response()->json(['message' => 'Solution added successfully', 'solution' => $solution], 201);
     }
 
     /**

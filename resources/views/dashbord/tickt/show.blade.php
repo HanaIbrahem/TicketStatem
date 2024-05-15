@@ -84,14 +84,14 @@
                         Close
                     </a>
                     <a class="btn btn-outline-danger" id="delete"
-                        href="{{ route('dashbord.ticket.destroy', $ticket->id) }}">
+                        href="{{ route('dashbord.ticket.delete', $ticket->id) }}">
                         Remove
                     </a>
                 @endif
                
                 @if ($ticket->state == 'reject')
                 <a class="btn btn-outline-danger" id="delete"
-                href="{{ route('dashbord.ticket.destroy', $ticket->id) }}">
+                href="{{ route('dashbord.ticket.delete', $ticket->id) }}">
                 Remove
             </a>
                 @endif

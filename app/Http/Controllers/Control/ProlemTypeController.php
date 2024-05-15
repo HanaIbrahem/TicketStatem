@@ -80,4 +80,19 @@ class ProlemTypeController extends Controller
     {
         //
     }
+
+    public function addproblem(Request $request)
+    {
+        //
+        $request->validate([
+            'title' => 'required|unique:problem_types,title',
+            
+        ]);
+        $problem= new ProblemType();
+        $problem->title= $request->title;
+        $problem->save();
+        return response()->json(['message' => 'problem added successfully','problem'=>$problem], 201);
+        
+
+    }
 }

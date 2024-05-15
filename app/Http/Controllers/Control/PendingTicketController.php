@@ -17,25 +17,28 @@ class PendingTicketController extends Controller
     {
         //
         // $user = Auth::user();
+        $no=1;
+
         $tickets = Tickt::whereHas('user', function ($query) {
             $query->where('role', 'employee');
         })
         ->where('state', 'pending')
         ->orderBy('created_at', 'desc')
         ->get();
-        return view('dashbord.tickt.pending', compact('tickets'));
+        return view('dashbord.tickt.pending', compact('tickets','no'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * manger to accept and reject 
      */
-    public function changestate(Request $request,$id)
+    public function changestate(Request $request)
     {
-        //
-        $ticketId = $id;
-        $action = $request->input('action'); 
+    
+        // dd($request->all());
+        $no=1;
+        $ticketId = $request->ticketId;
+        $action = $request->action; 
         $ticket=Tickt::find($ticketId);
-        
         if ($action=="approved") {
             
             $ticket->state="approved";
@@ -44,7 +47,14 @@ class PendingTicketController extends Controller
                 'message' => 'Ticket approved.', 
                 'alert-type' => 'success'
             );
-            return redirect()->back()->with($notification);
+            $tickets = Tickt::whereHas('user', function ($query) {
+                $query->where('role', 'employee');
+            })
+            ->where('state', 'pending')
+            ->orderBy('created_at', 'desc')
+            ->get();
+            return view('dashbord.includes.pending', compact('tickets','no'))->render();
+
 
         }else if($action=="reject"){
             $ticket->state="reject";
@@ -53,8 +63,14 @@ class PendingTicketController extends Controller
                 'message' => 'Ticket rejected.', 
                 'alert-type' => 'warning'
             );
-        
-            return redirect()->back()->with($notification);
+            $tickets = Tickt::whereHas('user', function ($query) {
+                $query->where('role', 'employee');
+            })
+            ->where('state', 'pending')
+            ->orderBy('created_at', 'desc')
+            ->get();
+            return view('dashbord.includes.pending', compact('tickets','no'))->render();
+
 
         }
        
@@ -63,15 +79,7 @@ class PendingTicketController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * only for manager 
      */
     public function approve(string $id)
     {
@@ -113,6 +121,7 @@ class PendingTicketController extends Controller
         ->get();
         return view('dashbord.tickt.tickets ', compact('tickets'));
     }
+
     public function state(Request  $request,string $id)
     {
         //
@@ -156,11 +165,45 @@ class PendingTicketController extends Controller
         
     }
     /**
-     * Update the specified resource in storage.
+     * change state for all ticets.
      */
-    public function update(Request $request, string $id)
+    public function changeallstate($action)
     {
         //
+         
+        if ($action=="approved") {
+            
+            $tickets = Tickt::whereHas('user', function ($query) {
+                $query->where('role', 'employee');
+            })
+            ->where('state', 'pending')->update(['state' => 'approved']);
+            $notification = array(
+                'message' => 'All Ticketes approved.', 
+                'alert-type' => 'success'
+            );
+          
+            return redirect()->back()->with($notification);;
+
+
+        }else if($action=="reject"){
+          
+            $notification = array(
+                'message' => 'All Ticketet rejected.', 
+                'alert-type' => 'warning'
+            );
+            $tickets = Tickt::whereHas('user', function ($query) {
+                $query->where('role', 'employee');
+            })
+            ->where('state', 'pending')->update(['state' => 'reject']);
+           
+            return redirect()->back()->with($notification);;
+
+
+
+        }
+       
+    
+        return redirect()->back();
     }
 
     /**

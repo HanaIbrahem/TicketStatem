@@ -135,11 +135,11 @@
 
                                     </td>
                                     <td>
-                                        {{ $ticket->startdate }}
+                                        {{ date("y/m/d h:i A",strtotime($ticket->startdate)) }}
 
                                     </td>
                                     <td>
-                                        {{ $ticket->enddate }}
+                                        {{  date("y/m/d h:i A",strtotime($ticket->enddate)) }}
 
                                     </td>
 
@@ -158,7 +158,7 @@
                                     <td>
                                         @if (auth()->user()->role === 'employee' && ($ticket->state == 'opened' || $ticket->state == 'reject') )
                                             <div class="dropdown">
-                                                <button class="btn btn-primary dropdown-toggle" type="button"
+                                                <button class="btn btn-sm btn-primary dropdown-toggle" type="button"
                                                     data-bs-toggle="dropdown" aria-expanded="false">
                                                     Actions
                                                 </button>

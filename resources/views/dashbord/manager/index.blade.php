@@ -72,7 +72,7 @@
                         Solution: {{$ticket->solution->title}} 
                         <span class="status float-right" style="--status-color: #888888">
                         </span><br>
-                        <small class="text-muted float-right">Last Updated: {{$ticket->updated_at->format('Y/M/d')}}  {{$ticket->dilivery}} Stete  </small>
+                        <small class="text-muted float-right">Last Updated: {{$ticket->updated_at->format('Y/M/d')}}  {{$ticket->dilivery}} Stete  <x-statecheck :state="$ticket->state" /></small>
                     </p>
                 </a>
                 

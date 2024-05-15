@@ -1,7 +1,5 @@
 @extends('dashbord.layout.master')
-@php
-    $no=1;
-@endphp
+
 
 @section('datatablecss')
 <link rel="stylesheet" href="{{asset('dashbord/assets/datatable/css/datatables.min.css')}}">
@@ -43,9 +41,17 @@
                     </div>
                 </div>
             </div> --}}
+            <input type="checkbox" id="checkAll"> Check All
+
+            <div class="row">
+                <div class="col-6">
+                    <a href="{{route('dashbord.pending.allstate','approved')}}" class="btn btn-success">Accept All</a>
+                    <a href="{{route('dashbord.pending.allstate','reject')}}" class="btn  btn-danger">Reject All</a>
+                </div>
+            </div>
             <div class="table-responsive">
 
-                <table id="example" class="table">
+                <table id="example" class="table display" style="width: 100%">
                     <thead>
                     <tr>
                         <th>
@@ -98,108 +104,10 @@
                         </th>
                     </tr>
                     </thead>
-                    <tbody >
+                    <tbody  id="ticketdata" >
                     
-                        
-                        @foreach($tickets as $ticket)
-                        <tr>
-                            <td>
-                                {{ $no++ }}
-                            </td>
-                            
-                            <td>
-                                {{ $ticket->id }}
+                            @include('dashbord.includes.pending')
 
-                            </td>
-                            <td>
-                                {{ $ticket->user->name }}
-                            </td>
-                            <td>
-                                {{ $ticket->requestFrom->title }}
-
-                            </td>
-    
-                            <td>
-                                {{ $ticket->place }}
-
-                            </td>
-                            <td>
-                                {{ $ticket->deliverytype }}
-
-                            </td>
-                            <td>
-                                {{ $ticket->issuetype }}
-
-                            </td>
-                            <td>
-                                {{ $ticket->problemType->title }}
-
-                            </td>
-                            <td>
-                                {{ $ticket->solution->title }}
-
-                            </td>
-                            <td>
-                                {{ $ticket->note }}
-
-                            </td>
-                            <td>
-                                {{ $ticket->startdate }}
-
-                            </td>
-                            <td>
-                                {{ $ticket->enddate }}
-
-                            </td>
-                          
-                            <td>
-                                 {{ $ticket->created_at->format('Y-m-d h:i A')}}
-                            
-                            </td>
-                          
-                            <td>
-                                <x-ticket :state="$ticket->state" />
-
-                            </td>
-                          
-
-
-                            <td>
-
-                                <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false">
-                                        Actions
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                       
-                                        <li>
-                                            <a class="dropdown-item text-primary"
-                                               href="{{ route('dashbord.pending.state', ['id' => $ticket->id, 'action' => 'approved']) }}">
-                                                Approve
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item text-danger"
-                                               href="{{ route('dashbord.pending.state', ['id' => $ticket->id, 'action' => 'reject']) }}">
-                                                Reject
-                                            </a>
-                                        </li>
-                                        
-                                       
-                                    
-                                        
-                                       
-                                    </ul>
-                                </div>
-                    
-                                  
-                           
-                               
-                            </td>
-                        </tr>
-                      @endforeach
                     </tbody>
                 </table>
             </div>
@@ -216,5 +124,66 @@
 <script src="{{asset('dashbord/assets/datatable/js/pdfmake.min.js')}}"></script>
 <script src="{{asset('dashbord/assets/datatable/js/vfs_fonts.js')}}"></script>
 <script src="{{asset('dashbord/assets/datatable/js/custom.js')}}"></script>
+@endsection
 
+@section('selectboxjs')
+<script>
+     console.log('Ticket ID:');
+</script>
+<script>
+   $(document).ready(function() {
+    $(document).on('click', '.dropdown-item', function(event) {
+        event.preventDefault();
+        var ticketId = $(this).data('ticket-id');
+        var action = $(this).data('ticket-action');
+        console.log(ticketId);
+
+        getMoreTickets(ticketId,action);
+    });
+});
+
+function getMoreTickets(ticketId,action) {
+    $.ajax({
+        type: "GET",
+        data: {
+            ticketId: ticketId,
+            action:action,
+        },
+        url: "{{ route('dashbord.pending.state') }}",
+        success: function(data) {
+                    $('#ticketdata').html(data);
+                    console.log(data);
+
+        }, error: function(xhr, status, error) {
+                        // Handle error response
+                        console.error(xhr.responseText);
+        }
+    });
+}
+
+// JavaScript
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('checkAll').addEventListener('change', function() {
+        var checkboxes = document.getElementsByClassName('ticketCheckbox');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = this.checked;
+        }
+    });
+
+    var checkboxes = document.getElementsByClassName('ticketCheckbox');
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener('change', function() {
+            var checkAllCheckbox = document.getElementById('checkAll');
+            checkAllCheckbox.checked = true;
+            for (var j = 0; j < checkboxes.length; j++) {
+                if (!checkboxes[j].checked) {
+                    checkAllCheckbox.checked = false;
+                    break;
+                }
+            }
+        });
+    }
+});
+
+</script>
 @endsection
