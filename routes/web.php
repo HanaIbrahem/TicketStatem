@@ -74,13 +74,11 @@ Route::middleware(['auth','manager'])->name('dashbord.')->group(function (){
     Route::get('index',[DashbordController::class,'index'])->name('index');
     Route::get('pending/tickets',[\App\Http\Controllers\Control\PendingTicketController::class,'index'])->name('pending');
     Route::get('pending/',[\App\Http\Controllers\Control\PendingTicketController::class,'changestate'])->name('pending.state');
-    Route::get('pending/all/{action}',[\App\Http\Controllers\Control\PendingTicketController::class,'changeallstate'])->name('pending.allstate');
-
+    Route::get('pending/all/',[\App\Http\Controllers\Control\PendingTicketController::class,'changeallstate'])->name('pending.allstate');
     Route::get('ticket/approve/{id}',[\App\Http\Controllers\Control\PendingTicketController::class,'approve'])->name('pending.approve');
-    Route::get('tickets/',[\App\Http\Controllers\Control\PendingTicketController::class,'tickets'])->name('ticket.all');
+    Route::get('tickets/',[\App\Http\Controllers\Control\PendingTicketController::class,'tickets'])->name('ticketes.all');
     Route::get('tickets/state/{id}',[\App\Http\Controllers\Control\PendingTicketController::class,'state'])->name('ticket.all.state');
 
-    // Route::get('pendding/ticket',[\App\Http\Controllers\Control\TIckteController::class,'pendingtickets'])->name('ticket.pending');
 
 
 });
@@ -99,6 +97,7 @@ Route::middleware(['auth','verified'])->name('dashbord.')->group(function (){
     Route::get('ticket/state/{id}',[\App\Http\Controllers\Control\TIckteController::class,'change_state'])->name('ticket.state');
     Route::get('ticket/destroy/{id}',[\App\Http\Controllers\Control\TIckteController::class,'destroy'])->name('ticket.destroy');
 
+
     //grid view
     Route::get('ticket/grid',[\App\Http\Controllers\Control\TIckteController::class,'grid'])->name('ticket.grid');
 
@@ -109,7 +108,8 @@ Route::middleware(['auth','verified'])->name('dashbord.')->group(function (){
 
     Route::post('ticket/solution',[\App\Http\Controllers\Control\SolutionController::class,'addsolution'])->name('addsolution');
     Route::post('ticket/problem',[\App\Http\Controllers\Control\ProlemTypeController::class,'addproblem'])->name('addproblem');
-    
+    Route::get('tickets/all',[\App\Http\Controllers\Control\TIckteController::class,'allticketstet'])->name('ticket.all');
+
 });
 
 Route::any('{any}', function () {

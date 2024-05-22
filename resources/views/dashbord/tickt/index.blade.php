@@ -99,7 +99,8 @@
 
                             @foreach ($tickets as $ticket)
                                 <tr>
-                                    <td>
+                                    <td class="d-flex align-items-center">
+                                        <input type="checkbox" name="selected_tickets[]" id="allchecetticket" value="{{ $ticket->id }}" class="me-2 ticketCheckbox">
                                         {{ $no++ }}
                                     </td>
                                     <td>
@@ -250,6 +251,18 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="mt-4">
+                    <input type="checkbox" id="selectAllBtn"> Check All
+                    @if (auth()->user()->role =='employee')
+                    <a href="#" data-state="pending" id="allstate" class="btn btn-sm btn-warning ms-1">Close
+                        All</a>
+                    @endif
+                    @if (auth()->user()->role !=='employee')
+                    <a href="#" data-state="approved" id="allstate" class="btn btn-sm btn-success ms-1">Approve All</a>
+                    @endif
+                    <a href="#" data-state="remove" id="allstate" class="btn btn-sm btn-danger allstate ms-1">Remove
+                        All</a>
+                </div>
             </div>
 
         </div>
@@ -265,14 +278,60 @@
     <script src="{{ asset('dashbord/assets/datatable/js/pdfmake.min.js') }}"></script>
     <script src="{{ asset('dashbord/assets/datatable/js/vfs_fonts.js') }}"></script>
     <script src="{{ asset('dashbord/assets/datatable/js/custom.js') }}"></script>
+@endsection
 
+@section('selectboxjs')
     <script>
-        
+        //seelct checkbox 
+        $(document).ready(function() {
+            $('#selectAllBtn').change(function() {
+                $('.ticketCheckbox').prop('checked', $(this).prop('checked'));
+            });
+        });
+
+        //jqury request for reject all or accept all
+        $(document).ready(function() {
+            $(document).on('click', '#allstate', function(event) {
+                event.preventDefault();
+                var stete = $(this).data('state');
+                var selectedTickets = [];
+                $('#allchecetticket:checked').each(function() {
+                    selectedTickets.push($(this).val());
+                });
+                console.log(selectedTickets);
+                ticketstate(stete, selectedTickets)
+            });
+        });
+
+        function ticketstate(ticketstate, selectedtickets) {
+            $.ajax({
+                type: "GET",
+                data: {
+                    stete: ticketstate,
+                    selectedTickets: selectedtickets
+                },
+                url: "{{ route('dashbord.ticket.all') }}",
+                success: function(response) {
+                    // $('#ticketdata').html(data);
+                    toastr[response['alert-type']](response['message']);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+
+                },
+                error: function(xhr, status, error) {
+                    // Handle error response
+                    console.error(xhr.responseText);
+                }
+            });
+        }
     </script>
 @endsection
+
 
 @section('switalertjs')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="{{asset('dashbord/assets/js/sweetalert.init.js')}}"></script>
 @endsection
+

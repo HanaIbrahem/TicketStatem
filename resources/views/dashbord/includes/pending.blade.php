@@ -1,7 +1,7 @@
 @foreach ($tickets as $ticket)
       <tr>
         <td class="d-flex align-items-center">
-            <input type="checkbox" name="selected_tickets[]" value="{{ $ticket->id }}" class="me-2">
+            <input type="checkbox" name="selected_tickets[]" id="allchecetticket" value="{{ $ticket->id }}" class="me-2 ticketCheckbox">
             {{ $no++ }}
         </td>
 
@@ -51,7 +51,7 @@
           </td>
 
           <td>
-              {{ $ticket->created_at->format('Y-m-d h:i A') }}
+              {{ $ticket->created_at}}
 
           </td>
 
@@ -97,5 +97,4 @@
           </td>
       </tr>
 @endforeach
-
 

@@ -98,7 +98,7 @@
 
 
                        <li class="sidebar-item">
-                           <a class="sidebar-link" href="{{ route('dashbord.ticket.all') }}" aria-expanded="false">
+                           <a class="sidebar-link" href="{{ route('dashbord.ticketes.all') }}" aria-expanded="false">
                                <span>
                                    <i class="fa-solid fa-phone"></i>
                                </span>

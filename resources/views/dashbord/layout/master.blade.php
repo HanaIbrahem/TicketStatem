@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark-layout">
 
 <head>
     <meta charset="UTF-8">
@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="{{ asset('dashbord/assets/css/styles.css') }}">
 
     <link rel="stylesheet" href="{{ asset('dashbord/assets/fontawsom/css/all.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{asset('dashbord/assets/css/colors.css')}}">
+    <link rel="stylesheet" href="{{asset('dashbord/assets/css/themes/semi-dark-layout.css')}}">
+    <link rel="stylesheet" href="{{asset('dashbord/assets/css/themes/dark-layout.css')}}"> --}}
     @yield('datatablecss')
     @yield('selectboxcss')
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
@@ -18,7 +21,7 @@
     <title>Teammart-IT</title>
 </head>
 
-<body class="bg-light">
+<body>
 
     <!--  Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
@@ -49,6 +52,8 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+    {{-- <script src="{{asset('dashbord/assets/js/vendors.min.js')}}"></script>
+    <script src="{{asset('dashbord/assets/js/darkmode.js')}}"></script> --}}
 
     <x-toster />
     @yield('datatablejs')

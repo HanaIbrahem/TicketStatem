@@ -309,6 +309,87 @@ class TIckteController extends Controller
         return redirect()->back();
         
     }
+    //change state for all tickets
+    public function allticketstet(Request $request)
+    {
+
+        $action=$request->stete;
+        $selected=$request->selectedTickets;
+     
+        // return response()->json($action);
+
+        $user = Auth::user();
+
+        $action=$request->stete;
+        $selected=$request->selectedTickets;
+        // return response()->json();
+
+        // return response()->json($action);
+        if (!empty($selected) && is_array($selected))
+        {
+
+            if ($action == "pending" && $user->role=='employee' ) {
+                $tickets = Tickt::where('state', 'opened')
+                         ->whereIn('id', $selected)
+                        ->where('user_id',$user->id)
+                        ->update(['state' => 'pending']);
+                $notification = [
+                    'message' => ' '.$tickets.' Ticketes closed.', 
+                    'alert-type' => 'success'
+                ];
+            
+                return response()->json($notification);
+            
+            } else if ($action == "remove" ) {
+           
+                if ($user->role =='employee') {
+
+                
+                    $tickets = Tickt::whereIn('id', $selected)
+                    ->where('state', 'opened')
+                    ->where('user_id',$user->id)
+                    ->delete();
+
+                }else{
+                    $tickets = Tickt::whereIn('id', $selected)
+                    
+                    ->where('user_id',$user->id)
+                    ->delete();
+                }
+                $notification = [
+                    'message' => ''.$tickets.' Ticketet deleted.', 
+                    'alert-type' => 'error'
+                ];
+                return response()->json($notification);
+            }else if ($action == "approved" ){
+
+                $tickets = Tickt::whereDoesntHave('user', function ($query) {
+                    $query->where('role', 'employee');
+                })->whereIn('id', $selected)
+                ->where('user_id',$user->id)
+                ->update(['state' => 'approved']);
+
+                
+                $notification = [
+                    'message' => ' '.$tickets.' Ticketes Approved.', 
+                    'alert-type' => 'success'
+                ];
+                return response()->json($notification);
+            }
+        }
+    
+        elseif (empty($selected) ) {
+            # code...
+            $notification = [
+                'message' => ' No ticket affected .', 
+                'alert-type' => 'info'
+            ];
+            return response()->json($notification);
+
+        }
+    
+   
+    }
 
 
 }

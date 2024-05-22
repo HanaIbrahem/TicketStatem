@@ -167,43 +167,57 @@ class PendingTicketController extends Controller
     /**
      * change state for all ticets.
      */
-    public function changeallstate($action)
+    public function changeallstate(Request $request)
     {
         //
-         
-        if ($action=="approved") {
+    
+        $action=$request->stete;
+        $selected=$request->selectedTickets;
+        // return response()->json();
+
+        // return response()->json($action);
+        if (!empty($selected) && is_array($selected))
+        {
+
+            if ($action == "approved" ) {
+                $tickets = Tickt::whereHas('user', function ($query) {
+                            $query->where('role', 'employee');
+                        })
+                        ->whereIn('id', $selected)
+                        ->where('state', 'pending')
+                        ->update(['state' => 'approved']);
+                $notification = [
+                    'message' => ' '.$tickets.' Ticketes approved.', 
+                    'alert-type' => 'success'
+                ];
             
-            $tickets = Tickt::whereHas('user', function ($query) {
-                $query->where('role', 'employee');
-            })
-            ->where('state', 'pending')->update(['state' => 'approved']);
-            $notification = array(
-                'message' => 'All Ticketes approved.', 
-                'alert-type' => 'success'
-            );
-          
-            return redirect()->back()->with($notification);;
-
-
-        }else if($action=="reject"){
-          
-            $notification = array(
-                'message' => 'All Ticketet rejected.', 
-                'alert-type' => 'warning'
-            );
-            $tickets = Tickt::whereHas('user', function ($query) {
-                $query->where('role', 'employee');
-            })
-            ->where('state', 'pending')->update(['state' => 'reject']);
-           
-            return redirect()->back()->with($notification);;
-
-
+                return response()->json($notification);
+            
+            } else if ($action == "reject" ) {
+                $tickets = Tickt::whereHas('user', function ($query) {
+                            $query->where('role', 'employee');
+                        })
+                        ->whereIn('id', $selected)
+                        ->where('state', 'pending')
+                        ->update(['state' => 'reject']);
+                $notification = [
+                    'message' => ''.$tickets.' Ticketet rejected.', 
+                    'alert-type' => 'warning'
+                ];
+                return response()->json($notification);
+            }
+        }
+    
+        elseif (empty($selected) ) {
+            # code...
+            $notification = [
+                'message' => ' No ticket affected .', 
+                'alert-type' => 'info'
+            ];
+            return response()->json($notification);
 
         }
-       
     
-        return redirect()->back();
     }
 
     /**
