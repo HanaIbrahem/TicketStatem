@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" class="dark-layout">
+<html lang="en" dir="ltr"  data-bs-theme="{{ $_COOKIE['theme'] ?? 'light' }}" data-color-theme="Blue_Theme" data-layout="vertical">
 
 <head>
+    <!-- Required meta tags -->
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ asset('dashbord/assets/css/styles.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('dashbord/assets/css/styles.css') }}">
+
+    <!-- Core Css -->
+    <link rel="stylesheet" href="{{asset('dashbord/assets/css/styles.css')}}">
 
     <link rel="stylesheet" href="{{ asset('dashbord/assets/fontawsom/css/all.min.css') }}">
-    {{-- <link rel="stylesheet" href="{{asset('dashbord/assets/css/colors.css')}}">
-    <link rel="stylesheet" href="{{asset('dashbord/assets/css/themes/semi-dark-layout.css')}}">
-    <link rel="stylesheet" href="{{asset('dashbord/assets/css/themes/dark-layout.css')}}"> --}}
+
     @yield('datatablecss')
     @yield('selectboxcss')
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
     <link rel="icon" href="{{ asset('unnamed.png') }}">
 
@@ -24,37 +24,70 @@
 <body>
 
     <!--  Body Wrapper -->
-    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6"
-        data-sidebartype="full"data-sidebar-position="fixed" data-header-position="fixed">
+
+    <div id="main-wrapper">
         <x-partials.side />
 
 
         <!--  Main wrapper -->
-        <div class="body-wrapper">
+        <div class="page-wrapper">
+
             <x-partials.header />
 
+            <div class="body-wrapper">
 
-            <div class="container-fluid">
-                @yield('main')
+
+
+                <div class="container-fluid">
+                    @yield('main')
+                </div>
+            </div>
+
+            <script>
+                function handleColorTheme(e) {
+                    document.documentElement.setAttribute("data-color-theme", e);
+                }
+            </script>
+
+            <div class="offcanvas customizer offcanvas-end" style="visibility: none" tabindex="-1" id="offcanvasExample"
+                aria-labelledby="offcanvasExampleLabel">
+                
+                <div class="offcanvas-body h-n80" data-simplebar="">
+                    <h6 class="fw-semibold fs-4 mb-2 mt-5">Sidebar Type</h6>
+                    <div class="d-flex flex-row gap-3 customizer-box" role="group">
+                        <a href="javascript:void(0)" class="fullsidebar">
+                            <input type="radio" class="btn-check" name="sidebar-type" id="full-sidebar"
+                                autocomplete="off">
+                            <label class="btn p-9 btn-outline-primary" for="full-sidebar">
+                                <i class="icon ti ti-layout-sidebar-right fs-7 me-2"></i>Full
+                            </label>
+                        </a>
+                        <div>
+                            <input type="radio" class="btn-check " name="sidebar-type" id="mini-sidebar"
+                                autocomplete="off">
+                            <label class="btn p-9 btn-outline-primary" for="mini-sidebar">
+                                <i class="icon ti ti-layout-sidebar fs-7 me-2"></i>Collapse
+                            </label>
+                        </div>
+                    </div>
+
+                   
+                </div>
             </div>
         </div>
+
     </div>
 
 
 
+    {{-- Required venddors --}}
     <script src="{{ asset('dashbord/assets/libs/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('dashbord/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('dashbord/assets/js/sidebarmenu.js') }}"></script>
+    <script src="{{ asset('dashbord/assets/js/vendor.min.js') }}"></script>
+    <script src="{{asset('dashbord/assets/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('dashbord/assets/js/toastr.min.js')}}"></script>
+    <script src="{{ asset('dashbord/assets/js/app.init.js') }}"></script>
+    <script src="{{ asset('dashbord/assets/js/theme.js') }}"></script>
     <script src="{{ asset('dashbord/assets/js/app.min.js') }}"></script>
-    {{-- <script src="{{ asset('dashbord/assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('dashbord/assets/libs/simplebar/dist/simplebar.js') }}"></script> --}}
-    {{-- <script src="{{ asset('dashbord/assets/js/dashboard.js') }}"></script> --}}
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-    {{-- <script src="{{asset('dashbord/assets/js/vendors.min.js')}}"></script>
-    <script src="{{asset('dashbord/assets/js/darkmode.js')}}"></script> --}}
-
     <x-toster />
     @yield('datatablejs')
     @yield('selectboxjs')
