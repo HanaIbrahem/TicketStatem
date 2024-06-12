@@ -62,6 +62,8 @@ Route::middleware(['auth','superadmin'])->name('dashbord.')->group(function (){
     //Ticket Routes
     // Route::get('pending\ticket',[\App\Http\Controllers\Control\PendingTicketController::class,'index'])->name('pending');
     Route::get('ticket/approve/{id}',[\App\Http\Controllers\Control\PendingTicketController::class,'approve'])->name('pending.approve');
+    Route::get('setting', [\App\Http\Controllers\SyetemSetting::class, 'index'])->name('setting');
+    Route::get('export-database', [\App\Http\Controllers\SyetemSetting::class, 'export'])->name('setting.export');
 
 
 
@@ -78,6 +80,8 @@ Route::middleware(['auth','manager'])->name('dashbord.')->group(function (){
     Route::get('ticket/approve/{id}',[\App\Http\Controllers\Control\PendingTicketController::class,'approve'])->name('pending.approve');
     Route::get('tickets/',[\App\Http\Controllers\Control\PendingTicketController::class,'tickets'])->name('ticketes.all');
     Route::get('tickets/state/{id}',[\App\Http\Controllers\Control\PendingTicketController::class,'state'])->name('ticket.all.state');
+    // DateOrder
+    Route::get('tickets/dateorder',[\App\Http\Controllers\Control\PendingTicketController::class,'dateorder'])->name('ticketes.dateorder');
 
 
 
@@ -104,7 +108,7 @@ Route::middleware(['auth','verified'])->name('dashbord.')->group(function (){
     Route::get('ticket/show/{id}',[\App\Http\Controllers\Control\TIckteController::class,'show'])->name('ticket.show');
     Route::get('ticket/delete/{id}',[\App\Http\Controllers\Control\TIckteController::class,'delete'])->name('ticket.delete');
     Route::get('ticket/moreticket',[\App\Http\Controllers\Control\TIckteController::class,'getMoretickets'])->name('ticket.more');
-    Route::post('ticket/date',[\App\Http\Controllers\Control\TIckteController::class,'dateorder'])->name('ticket.dateorder');
+    Route::get('ticket/date',[\App\Http\Controllers\Control\TIckteController::class,'dateorder'])->name('ticket.dateorder');
 
     Route::post('ticket/solution',[\App\Http\Controllers\Control\SolutionController::class,'addsolution'])->name('addsolution');
     Route::post('ticket/problem',[\App\Http\Controllers\Control\ProlemTypeController::class,'addproblem'])->name('addproblem');

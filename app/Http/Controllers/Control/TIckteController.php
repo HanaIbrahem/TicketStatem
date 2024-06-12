@@ -17,10 +17,14 @@ class TIckteController extends Controller
      */
     public function index()
     {
-        //::where('is_active', true)
+        //select tickets between strt of month and current date 
+        $startDate = now()->startOfMonth();
+        $currentDate = now();
         $user = Auth::user();
-        $tickets = Tickt::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
-        return view('dashbord.tickt.index', compact('tickets'));
+        $tickets = Tickt::where('user_id', $user->id)
+        -> whereBetween('created_at', [$startDate, $currentDate])
+        ->orderBy('created_at', 'desc')->get();
+        return view('dashbord.tickt.index', compact('tickets','startDate','currentDate'));
 
     }
 
@@ -183,6 +187,7 @@ class TIckteController extends Controller
 
     // }
 
+    //chnage stete for ticket by user to close tickets
     public function change_state($id)
     {
         $ticket = Tickt::findOrFail($id);
@@ -236,6 +241,7 @@ class TIckteController extends Controller
         return view('dashbord.tickt.grid',compact('tickets'));
     }
 
+    //this fuction used for deleting ticket in show page to redirect index page 
     public function delete(string $id)
     {
         //
@@ -258,9 +264,6 @@ class TIckteController extends Controller
     //filter order by date 
     public function dateorder(Request $request)
     {
-
-
-
         $user = Auth::user();
         $request->validate([
             'fromdate' => 'required|date',
@@ -268,13 +271,19 @@ class TIckteController extends Controller
         ]);
         $formdate=$request->input('fromdate');
         $todate=$request->input('todate');
+        $orderby=$request->input('order');
+        $tickets = Tickt::whereBetween($orderby, [$formdate, $todate])->
+        where('user_id',$user->id)->orderBy('created_at', 'desc')->get();
 
-        $tickets = Tickt::where('user_id', $user->id)
-        ->whereBetween('created_at',[$formdate,$todate])
-        ->orderBy('created_at', 'desc');
+        $no=1;
+        if ($request->ajax()) {
+            return view('dashbord.includes.ticket_list',compact('tickets','no'))->render();
+
+        }
+
     
-    
-        return response()->json($tickets);
+        
+        // return response()->json($tickets);
 
     }
     //get more tickets

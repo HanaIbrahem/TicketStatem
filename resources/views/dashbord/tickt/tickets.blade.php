@@ -20,26 +20,48 @@
             </div>
 
             <div class="card-body">
+                <form  method="GET" id="dateform">
+                    @csrf
+                   
+                    <div class="row mb-4">
 
-                {{-- <div class="row">
-                <div class="col-md-4 col-sm-12 mb-xl-3 mb-sm-4">
-                    <div class="form-group">
-                        <label for="suggestions">From</label>
-    
-                        <input type="datetime-local" class="form-control" id="datetimeInput" value="<?php echo date('Y-m-d\TH:i'); ?>">
-    
-    
+                        <div class="col-md-3 col-sm-12 mt-xl-3 mt-sm-4">
+                            <div class="form-group">
+                                <label class="form-label" for="suggestions">From</label>
+
+                                <input required name="fromdate" type="datetime-local" class="form-control"
+                                    id="datetimeInput" value="{{$startDate->format('Y-m-d\TH:i')}}">
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-12 mt-xl-3 mt-sm-4">
+                            <div class="form-group">
+                                <label class="form-label" for="suggestions">To</label>
+                                <input required name="todate" type="datetime-local" class="form-control"
+                                    id="datetimeInput" value="{{$currentDate->format('Y-m-d\TH:i')}}">
+
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-6 mt-xl-3 mt-sm-4">
+                            <div class="mb-3 has-danger">
+                                <label class="form-label">Date Order</label>
+                                <select required name="order" class="form-select mr-sm-2" id=""
+                                    placeholder="Order By" data-search="true" data-silent-initial-value-set="true">
+                                    <option value="created_at">Created At</option>
+                                    <option value="startdate">Opened At</option>
+                                    <option value="enddate">Closed At</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-6 mt-xl-3 mt-sm-5">
+
+                            <input type="submit" class="btn btn-outline-info mt-4" value="Search">
+                        </div>
+                        
                     </div>
-                </div>
-    
-                <div class="col-md-4 col-sm-12 mb-xl-3 mb-sm-4">
-                    <div class="form-group">
-                        <label for="suggestions">To</label>
-                        <input type="datetime-local" class="form-control" id="datetimeInput" value="<?php echo date('Y-m-d\TH:i'); ?>">
-    
-                    </div>
-                </div>
-            </div> --}}
+                </form>
                 <div class="table-responsive">
 
                     <table id="example" class="table">
@@ -96,96 +118,9 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
-
-
-                            @foreach ($tickets as $ticket)
-                                <tr>
-                                    <td>
-                                        {{ $no++ }}
-                                    </td>
-                                    <td>
-                                        {{ $ticket->id }}
-
-                                    </td>
-                                    <td>
-                                        {{ $ticket->user->name }}
-
-                                    </td>
-                                    <td>
-                                        {{ $ticket->requestFrom->title }}
-
-                                    </td>
-
-                                    <td>
-                                        {{ $ticket->place }}
-
-                                    </td>
-                                    <td>
-                                        {{ $ticket->deliverytype }}
-
-                                    </td>
-                                    <td>
-                                        {{ $ticket->issuetype }}
-
-                                    </td>
-                                    <td>
-                                        {{ $ticket->problemType->title }}
-
-                                    </td>
-                                    <td>
-                                        {{ $ticket->solution->title }}
-
-                                    </td>
-                                    <td>
-                                        {{ $ticket->note }}
-
-                                    </td>
-                                    <td>
-                                        {{ $ticket->startdate }}
-
-                                    </td>
-                                    <td>
-                                        {{ $ticket->enddate }}
-
-                                    </td>
-
-                                    <td>
-                                        {{ $ticket->created_at->format('Y-m-d h:i A') }}
-
-                                    </td>
-
-                                    <td>
-                                        <x-ticket :state="$ticket->state" />
-
-                                    </td>
-
-
-
-                                    <td>
-                                    
-                                            <div class="dropdown">
-                                                <button class="btn btn-primary dropdown-toggle" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Actions
-                                                </button>
-                                                <ul class="dropdown-menu">
-
-
-
-                                                    <x-ticketstat :ticket="$ticket" />
-                                                
-
-                                                </ul>
-                                            </div>
-                                     
-                                        
-
-
-
-                                    </td>
-                                </tr>
-                            @endforeach
+                        <tbody  id="ticketdata">
+                            @include('dashbord.includes.employee')
+                          
                         </tbody>
                     </table>
                 </div>
@@ -202,4 +137,34 @@
     <script src="{{ asset('dashbord/assets/datatable/js/pdfmake.min.js') }}"></script>
     <script src="{{ asset('dashbord/assets/datatable/js/vfs_fonts.js') }}"></script>
     <script src="{{ asset('dashbord/assets/datatable/js/custom.js') }}"></script>
+@endsection
+
+@section('selectboxjs')
+    <script>
+            $(document).ready(function() {
+            $('#dateform').submit(function(event) {
+                event.preventDefault(); // Prevent default form submission
+                var formData = $(this).serialize(); // Serialize form data
+                var table = $('#example').DataTable();
+
+                $.ajax({
+                    url: '{{ route('dashbord.ticketes.dateorder') }}', // Route to handle form submission
+                    method: 'GET',
+                    data: formData,
+                    success: function(data) {
+                        // Handle success response
+                        table.clear().draw();
+                        $('#ticketdata').html(data);
+                        table.rows.add($('#ticketdata tr')).draw();
+
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error response
+                        console.error(xhr.responseText);
+                     
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

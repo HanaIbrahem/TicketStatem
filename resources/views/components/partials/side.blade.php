@@ -117,6 +117,13 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
+                        <a class="sidebar-link {{ Route::currentRouteName() == 'dashbord.setting' ? 'active' : '' }}" href="{{ route('dashbord.setting') }}" aria-expanded="false">
+                            <span>
+                                <i class="fa-solid fa-gear"></i>                            </span>
+                            <span class="hide-menu">Setting</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
                         <a class="sidebar-link has-arrow {{ in_array(Route::currentRouteName(), ['dashbord.users', 'dashbord.user.create']) ? 'active' : '' }}" href="javascript:void(0)" aria-expanded="false">
                             <span class="d-flex">
                                 <i class="ti ti-user"></i>
