@@ -29,6 +29,7 @@
             background-color: #f5f5f5;
             border-radius: 5px;
             cursor: pointer;
+        
         }
     </style>
 @endsection
@@ -179,6 +180,45 @@
                             </div>
                         </div>
 
+                              
+                        <div class="row p-2 border border-3 rounded mt-2 ">
+
+                            <div class="col-md-12">
+                                <div class="form-group p-2">
+                                    <label class="form-label d-block d-sm-inline me-3" for="reason">Reason <span class="text-warning">(Optional)</span></label>
+                                    <div class="form-check form-check-inline ">
+                                        <input class="form-check-input info check-light-info" type="radio" name="reasonOptions" id="Damaged intentionally" value="Damaged intentionally">
+                                        <label class="form-check-label" for="Market">Damaged intentionally</label>
+                                    </div>
+                                   
+                                    <div class="d-block d-sm-none p-0 m-0">
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input info check-light-info" type="radio" name="reasonOptions" id="Damaged unintentionally" value="Damaged unintentionally">
+                                        <label class="form-check-label" for="Damaged Device">Damaged unintentionally</label>
+                                    </div>
+                                    <div class="d-block d-sm-none p-0 m-0">           
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input info check-light-info" type="radio" name="reasonOptions" id="IT Update" value="IT Update">
+                                        <label class="form-check-label" for="IT Update">IT Update</label>
+                                    </div>
+                                    <br>
+ 
+                                </div>
+                            </div>  
+
+                            <div class="col-md-12">
+                                <div class="form-group  align-items-center">
+                                    <label class="form-label " for="reason">Responsibility <span class="text-warning">(Optional)</span></label>
+                                    <input type="text" name="responsibility" class="form-control">
+                                </div>
+                                
+                            </div>
+                            <small class="text-info"> <span class="fw-bold text-dark">Note:</span>Fill out these fields when replacing the device.</small>
+
+                            
+                        </div>
                         <div class="row">
                             <div class="col-12 mt-xl-3 mt-sm-2">
                                 <div class="form-group">

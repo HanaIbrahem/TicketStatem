@@ -23,6 +23,8 @@ return new class extends Migration
             $table->dateTime('startdate');
             $table->dateTime('enddate');
             $table->string('note')->nullable();
+            $table->string('reason')->nullable();
+            $table->string('responsibility')->nullable();
             $table->foreignId("user_id")->constrained();
             $table->foreignId('problem_id')->constrained('problem_types')->onDelete('cascade');
             $table->foreignId('requets_id')->constrained('requets_froms')->onDelete('cascade');

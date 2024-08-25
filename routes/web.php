@@ -64,6 +64,8 @@ Route::middleware(['auth','superadmin'])->name('dashbord.')->group(function (){
     Route::get('ticket/approve/{id}',[\App\Http\Controllers\Control\PendingTicketController::class,'approve'])->name('pending.approve');
     Route::get('setting', [\App\Http\Controllers\SyetemSetting::class, 'index'])->name('setting');
     Route::get('export-database', [\App\Http\Controllers\SyetemSetting::class, 'export'])->name('setting.export');
+    Route::get('backup-database', [\App\Http\Controllers\SyetemSetting::class, 'backupToStorage'])->name('setting.backup');
+    Route::get('/backups/download/{filename}', [\App\Http\Controllers\SyetemSetting::class, 'download'])->name('backups.download');
 
 
 

@@ -41,6 +41,14 @@
 
     </td>
     <td>
+        {{ $ticket->reason }}
+
+    </td>
+    <td>
+        {{ $ticket->responsibility }}
+
+    </td>
+    <td>
         {{ $ticket->startdate }}
 
     </td>

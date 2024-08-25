@@ -68,6 +68,8 @@ class TIckteController extends Controller
 
 
         $ticket->note = $request->input('note');
+        $ticket->reason= $request->input('reasonOptions');
+        $ticket->responsibility=$request->input('responsibility');
         //fogign keys
         $ticket->user_id = auth()->id();
         $ticket->requets_id = $request->input('requetsfrom');
@@ -85,6 +87,7 @@ class TIckteController extends Controller
             'alert-type' => 'success'
         );
 
+    
         return redirect()->back()->with($notification);
     }
 
@@ -152,6 +155,8 @@ class TIckteController extends Controller
 
 
         $ticket->note = $request->input('note');
+        $ticket->reason= $request->input('reasonOptions');
+        $ticket->responsibility=$request->input('responsibility');
         //fogign keys
         $ticket->user_id = auth()->id();
         $ticket->requets_id = $request->input('requetsfrom');

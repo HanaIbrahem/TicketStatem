@@ -84,6 +84,12 @@
                                     Note
                                 </th>
                                 <th>
+                                    Reason
+                                </th>
+                                <th>
+                                    Responsibility
+                                </th>
+                                <th>
                                     OpenDate
                                 </th>
                                 <th>

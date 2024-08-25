@@ -1,42 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+namespace App\Console\Commands;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Carbon\Carbon;
-class SyetemSetting extends Controller
+
+class BackupDatabase extends Command
 {
-    //
+    protected $signature = 'backup:database';
+    protected $description = 'Backup the database';
 
-    public function index()
+    public function __construct()
     {
-
-        $files = Storage::files('backups');
-
-       return view('dashbord.setting',compact('files'));
+        parent::__construct();
     }
 
-    public function export()
-    {
-        $timestamp = now()->format('Y_m_d_His');
-        $filename = "database_Export_$timestamp.sql";
-        $sql = $this->generateSql();
-
-        // Create a streamed response
-        $response = new StreamedResponse(function() use ($sql) {
-            echo $sql;
-        });
-
-        $response->headers->set('Content-Type', 'text/sql');
-        $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
-
-        return $response;
-    }
-
-    public function backupToStorage()
+    public function handle()
     {
         $timestamp = now()->format('Y_m_d_His');
         $filename = "database_backup_$timestamp.sql";
@@ -45,7 +25,7 @@ class SyetemSetting extends Controller
         // Store the SQL content into a file in storage
         Storage::put("backups/$filename", $sql);
 
-        return redirect()->route('dashbord.setting');
+        $this->info('Database backup successfully stored as ' . $filename);
     }
 
     private function generateSql()
@@ -80,8 +60,5 @@ class SyetemSetting extends Controller
 
         return $sql;
     }
-    public function download($filename)
-    {
-        return Storage::download("backups/$filename");
-    }
 }
+
