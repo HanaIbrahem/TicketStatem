@@ -360,7 +360,7 @@ class TIckteController extends Controller
 
                 
                     $tickets = Tickt::whereIn('id', $selected)
-                    ->where('state', 'opened')
+                    ->whereIn('state', ['reject','opened'])
                     ->where('user_id',$user->id)
                     ->delete();
 

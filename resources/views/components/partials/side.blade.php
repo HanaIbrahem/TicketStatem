@@ -89,6 +89,15 @@
                             <span class="hide-menu">Employee Tickets</span>
                         </a>
                     </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ Route::currentRouteName() == 'dashbord.trash' ? 'active' : '' }}" href="{{ route('dashbord.trash') }}" aria-expanded="false">
+                            <span>
+                                <i class="fa-solid fa-trash"></i>
+                            </span>
+                            <span class="hide-menu">Trash</span>
+                        </a>
+                    </li>
                 @endif
 
                 @if (auth()->user()->role === 'superadmin')

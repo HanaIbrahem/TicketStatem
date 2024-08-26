@@ -84,6 +84,10 @@ Route::middleware(['auth','manager'])->name('dashbord.')->group(function (){
     Route::get('tickets/state/{id}',[\App\Http\Controllers\Control\PendingTicketController::class,'state'])->name('ticket.all.state');
     // DateOrder
     Route::get('tickets/dateorder',[\App\Http\Controllers\Control\PendingTicketController::class,'dateorder'])->name('ticketes.dateorder');
+    
+    Route::get('trash',[\App\Http\Controllers\TrashController::class,'index'])->name('trash');
+    Route::get('trash/action',[\App\Http\Controllers\TrashController::class,'action'])->name('trash.action');
+    Route::get('trash/allstet',[\App\Http\Controllers\TrashController::class,'allstate'])->name('trash.allstate');
 
 
 

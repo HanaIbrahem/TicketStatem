@@ -30,6 +30,7 @@ return new class extends Migration
             $table->foreignId('requets_id')->constrained('requets_froms')->onDelete('cascade');
             $table->foreignId('solution_id')->constrained('solutions')->onDelete('cascade');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }
