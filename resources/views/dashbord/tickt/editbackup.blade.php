@@ -5,6 +5,7 @@
     $deliverytype = ['Email', 'Phone Call', 'Remote', 'On Site Support', 'Video Call'];
     $places = [
         'Market-Erbil',
+        'Market-Outside Erbil',
         'Market-Mousl',
         'HQ-Alwa',
         'Office Kwestan',

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->enum('issuetype', ['Hardwar', 'Softwar','Network','Security','Email']);
             $table->enum('deliverytype', ['Email', 'Phone Call','Remote','On Site Support','Video Call']);
-            $table->enum('place', ['Market-Erbil', 'Market-Mousl','HQ-Alwa','Office Kwestan','Office Shaqlawa','HQ Musel','WareHouse Erbil','WareHouse Mosel']);
+            $table->enum('place', ['Market-Erbil','Market-Outside Erbil', 'Market-Mousl','HQ-Alwa','Office Kwestan','Office Shaqlawa','HQ Musel','WareHouse Erbil','WareHouse Mosel']);
             $table->enum('state', ['approved', 'opened','pending','reject']);
 
 

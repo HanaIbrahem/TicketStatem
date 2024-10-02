@@ -65,6 +65,26 @@
                     </div>
                 </div>
 
+                @if ($ticket->reason !='')
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="solution" class="form-label">Reason</label>
+                            <p>{{ $ticket->reason }}</p>
+                        </div>
+                    </div>
+                    @if ($ticket->responsibility !='')
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <label for="solution" class="form-label">Responsibility</label>
+                            <p>{{ $ticket->responsibility }}</p>
+                        </div>
+                    </div>
+                    @endif
+                  
+                </div>
+                    
+                @endif
                 @if ($ticket->note != '')
                     <div class="row">
                         <div class="col-12">
