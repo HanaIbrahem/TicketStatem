@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="{{ asset('dashbord/assets/fontawsom/css/all.min.css') }}">
 
+    <link rel="stylesheet" href="{{asset('css/styles.css')}}">
     @yield('datatablecss')
     @yield('selectboxcss')
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">

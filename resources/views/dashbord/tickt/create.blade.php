@@ -30,7 +30,7 @@
             background-color: #f5f5f5;
             border-radius: 5px;
             cursor: pointer;
-        
+
         }
     </style>
 @endsection
@@ -71,7 +71,7 @@
 
 
                                     <div id="requetsfromsugestion" class="mt-2 suggestionss"></div>
-                                  
+
                                 </div>
                             </div>
                             <!--/span-->
@@ -112,9 +112,9 @@
 
                                     <div id="probletypesugestion" class="mt-2 suggestionss"></div>
                                     <button type="button" class="btn mb-1 mt-1 btn-sm bg-primary-subtle text-primary "
-                                    data-bs-toggle="modal" data-bs-target="#problem-modal">
-                                    Add Detail
-                                </button>
+                                        data-bs-toggle="modal" data-bs-target="#problem-modal">
+                                        Add Detail
+                                    </button>
                                 </div>
                             </div>
                             <!--/span-->
@@ -181,44 +181,50 @@
                             </div>
                         </div>
 
-                              
-                        <div class="row p-2 border border-3 rounded mt-2 ">
 
-                            <div class="col-md-12">
-                                <div class="form-group p-2">
-                                    <label class="form-label d-block d-sm-inline me-3" for="reason">Reason <span class="text-warning">(Optional)</span></label>
-                                    <div class="form-check form-check-inline ">
-                                        <input class="form-check-input info check-light-info" type="radio" name="reasonOptions" id="Damaged intentionally" value="Damaged intentionally">
-                                        <label class="form-check-label" for="Market">Damaged intentionally</label>
-                                    </div>
-                                   
-                                    <div class="d-block d-sm-none p-0 m-0">
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input info check-light-info" type="radio" name="reasonOptions" id="Damaged unintentionally" value="Damaged unintentionally">
-                                        <label class="form-check-label" for="Damaged Device">Damaged unintentionally</label>
-                                    </div>
-                                    <div class="d-block d-sm-none p-0 m-0">           
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input info check-light-info" type="radio" name="reasonOptions" id="IT Update" value="IT Update">
-                                        <label class="form-check-label" for="IT Update">IT Update</label>
-                                    </div>
-                                    <br>
- 
-                                </div>
-                            </div>  
+                        {{-- reason --}}
+                        <div class="row pt-2 mt-2 ">
 
-                            <div class="col-md-12">
-                                <div class="form-group  align-items-center">
-                                    <label class="form-label " for="reason">Responsibility <span class="text-warning">(Optional)</span></label>
-                                    <input type="text" name="responsibility" class="form-control">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+
+                                    <label class="form-label">Reason</label>
+
+                                    <select required name="reasonOptions" class="form-select mr-sm-2" placeholder="Reason">
+                                        <option value="Damaged Unintentionally" selected>Damaged Unintentionally</option>
+                                        <option value="Damaged Intentionally">Damaged Intentionally</option>
+                                        <option value="IT Update">IT Update</option>
+                                        <option value="Hardware Failure">Hardware Failure</option>
+                                        <option value="Software Bug">Software Bug</option>
+                                        <option value="External Factors">External Factors</option>
+                                        <option value="Old Device Malfunction">Old Device Malfunction</option>
+                                        <option value="Electrical Problem">Electrical Problem</option>
+                                    </select>
                                 </div>
-                                
                             </div>
-                            <small class="text-info"> <span class="fw-bold text-dark">Note:</span>Fill out these fields when replacing the device.</small>
+                            <div class="col-md-6">
+                                <div class="form-group py-2 align-items-center">
+                                    <label class="form-label " for="reason">Responsibility</label>
+                                    {{-- <input type="text" name="responsibility" class="form-control"> --}}
 
-                            
+                                    <select required name="responsibility" class="form-select mr-sm-2" placeholder="responsibility"
+                                        data-search="true" data-silent-initial-value-set="true">
+                                        <option value="Cashier">Cashier</option>
+                                        <option value="Supervisor">Supervisor</option>
+                                        <option value="Inventory Manager">Inventory Manager</option>
+                                        <option value="Branch Manager">Branch Manager</option>
+                                        <option value="Assistant Manager">Assistant Manager</option>
+                                        <option value="Vendor">Vendor</option>
+                                        <option value="Delivery Personnel">Delivery Personnel</option>
+                                        <option value="System Administrator">System Administrator</option>
+                                        <option value="Network Engineer">Network Engineer</option>
+                                        <option value="No Responsibility">No Responsibility (Unintentional Issue)</option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-12 mt-xl-3 mt-sm-2">
@@ -273,32 +279,31 @@
         </div>
     </div>
 
-    <div class="modal fade" id="problem-modal" tabindex="-1" aria-labelledby="problem-modal-label"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="problem-modal-label">More Detail</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h5>Add New Problem</h5>
-                <div id="problem-validation"></div>
-                <form method="POST" id="add-problem-form">
-                    @csrf
-                    <input type="text" name="title" class="m2 form-control">
-                    <input type="submit" class="mt-2 btn btn-secondary" value="Save">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn bg-danger-subtle text-danger waves-effect text-start"
-                    data-bs-dismiss="modal">
-                    Close
-                </button>
+    <div class="modal fade" id="problem-modal" tabindex="-1" aria-labelledby="problem-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="problem-modal-label">More Detail</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>Add New Problem</h5>
+                    <div id="problem-validation"></div>
+                    <form method="POST" id="add-problem-form">
+                        @csrf
+                        <input type="text" name="title" class="m2 form-control">
+                        <input type="submit" class="mt-2 btn btn-secondary" value="Save">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-danger-subtle text-danger waves-effect text-start"
+                        data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 @endsection
 
@@ -331,7 +336,7 @@
                             response.message + '</div>');
                         // Clear the input field
                         $('#add-solution-form input[name="title"]').val('');
-                   
+
                         solutionData.push(response.solution);
                         setTimeout(function() {
                             $('#solution-modal').modal('hide');
@@ -374,13 +379,13 @@
                     data: formData,
                     success: function(response) {
                         // Handle success response
-                        console.log(response);
+                        // console.log(response);
                         // Display success message or update UI
                         $('#problem-validation').html('<div class="alert alert-success">' +
                             response.message + '</div>');
                         // Clear the input field
                         $('#add-problem-form input[name="title"]').val('');
-                        
+
                         problemTypeData.push(response.problem);
 
                         setTimeout(function() {
